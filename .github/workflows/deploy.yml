@@ -23,6 +23,21 @@ jobs:
       - name: Descargar el repositorio
         uses: actions/checkout@v4
 
+      # "Re-run jobs" sobre una ejecucion antigua reconstruye EL COMMIT DE ESA
+      # EJECUCION, no el ultimo, y al publicarlo pisa el sitio con una version
+      # vieja. Preferimos que la ejecucion falle aqui, antes de tocar nada.
+      - name: Comprobar que se publica la punta de main
+        run: |
+          git fetch --depth=1 origin main
+          PUNTA=$(git rev-parse origin/main)
+          if [ "$GITHUB_SHA" != "$PUNTA" ]; then
+            echo "::error::Esta ejecucion construye el commit ${GITHUB_SHA:0:7}, pero la punta de main es ${PUNTA:0:7}."
+            echo "::error::Publicarla sobrescribiria el sitio con una version antigua, asi que se detiene aqui."
+            echo "::error::Para volver a publicar el estado actual: Actions -> Desplegar en GitHub Pages -> Run workflow (rama main)."
+            exit 1
+          fi
+          echo "Se publica la punta de main (${PUNTA:0:7})."
+
       # El dominio y la ruta base viven en astro.config.mjs, no aqui: asi no
       # hay dos sitios que puedan desincronizarse.
       - name: Construir el sitio
