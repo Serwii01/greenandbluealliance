@@ -75,23 +75,37 @@ El flujo [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) construy
 publica el sitio en cada `push` a `main`. Para activarlo, en el repositorio de GitHub:
 **Settings → Pages → Source → GitHub Actions**.
 
-### Dominio propio
+### Dónde vive el sitio
 
-1. Pon el dominio definitivo en la constante `SITE` de `astro.config.mjs` y en
-   `public/robots.txt`.
-2. Crea `public/CNAME` con el dominio, sin `https://` ni barra final.
-3. Apunta el DNS a GitHub Pages y activa **Enforce HTTPS** en Settings → Pages.
+Ahora mismo se publica en un subdirectorio,
+<https://serwii01.github.io/greenandbluealliance/>, así que el workflow construye con
+estas dos variables de entorno:
 
-### Publicar en un subdirectorio (sin dominio propio)
-
-Si el sitio va a vivir en `usuario.github.io/greenandblue`, construye con:
-
-```bash
-BASE_PATH=/greenandblue/ npm run build
+```yaml
+SITE_URL: https://serwii01.github.io
+BASE_PATH: /greenandbluealliance/
 ```
 
-Todos los enlaces internos pasan por el ayudante `url()` de
-[`src/lib/url.ts`](src/lib/url.ts), así que la ruta base se ajusta sola.
+Todo lo que apunta a una ruta interna pasa por el ayudante `url()` de
+[`src/lib/url.ts`](src/lib/url.ts) o por `import.meta.env.BASE_URL`, y `robots.txt` se
+genera en el build desde [`src/pages/robots.txt.ts`](src/pages/robots.txt.ts). Cambiar de
+ubicación es, por tanto, cuestión de tocar esas dos variables.
+
+Para reproducir en local exactamente lo que construye el workflow, usa **PowerShell**
+(Git Bash convierte las rutas que empiezan por `/` en rutas de Windows y rompe el build):
+
+```powershell
+$env:SITE_URL = "https://serwii01.github.io"; $env:BASE_PATH = "/greenandbluealliance/"; npm run build
+```
+
+### Pasar a dominio propio
+
+1. En [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), pon `SITE_URL` al
+   dominio nuevo y `BASE_PATH: /`.
+2. Actualiza la constante `SITE` de `astro.config.mjs`, que es el valor por defecto de las
+   construcciones locales.
+3. Crea `public/CNAME` con el dominio, sin `https://` ni barra final.
+4. Apunta el DNS a GitHub Pages y activa **Enforce HTTPS** en Settings → Pages.
 
 ## Pendiente de completar
 

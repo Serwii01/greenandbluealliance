@@ -27,6 +27,11 @@ jobs:
         uses: withastro/action@v3
         with:
           node-version: 22
+        env:
+          # Dominio y ruta base con los que se publica. Al pasar a dominio
+          # propio: SITE_URL pasa a ser ese dominio y BASE_PATH vuelve a '/'.
+          SITE_URL: https://serwii01.github.io
+          BASE_PATH: /greenandbluealliance/
 
   deploy:
     needs: build
