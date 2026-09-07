@@ -3,12 +3,13 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
-// Dominio definitivo del sitio. Cambiar aqui cuando se confirme el TLD.
-const SITE = process.env.SITE_URL ?? 'https://greenandbluealliance.org';
-
-// Ruta base. En un dominio propio es '/'. Si se publica en
-// usuario.github.io/greenandblue, basta con BASE_PATH=/greenandblue/ al construir.
-const BASE = process.env.BASE_PATH ?? '/';
+// DONDE VIVE EL SITIO. Estas dos constantes son la unica fuente de verdad:
+// el flujo de despliegue no las sobrescribe, asi que cualquier construccion
+// —local o en CI, de este commit o de otro— produce siempre las mismas rutas.
+//
+// Al pasar a dominio propio: SITE = 'https://el-dominio.tld' y BASE = '/'.
+const SITE = process.env.SITE_URL ?? 'https://serwii01.github.io';
+const BASE = process.env.BASE_PATH ?? '/greenandbluealliance/';
 
 export default defineConfig({
   site: SITE,

@@ -77,35 +77,34 @@ publica el sitio en cada `push` a `main`. Para activarlo, en el repositorio de G
 
 ### Dónde vive el sitio
 
-Ahora mismo se publica en un subdirectorio,
-<https://serwii01.github.io/greenandbluealliance/>, así que el workflow construye con
-estas dos variables de entorno:
+Ahora mismo se publica en un subdirectorio:
+<https://serwii01.github.io/greenandbluealliance/>. Eso obliga a que todas las rutas
+internas lleven ese prefijo, y las dos constantes que lo definen están **solo** en
+[`astro.config.mjs`](astro.config.mjs):
 
-```yaml
-SITE_URL: https://serwii01.github.io
-BASE_PATH: /greenandbluealliance/
+```js
+const SITE = process.env.SITE_URL  ?? 'https://serwii01.github.io';
+const BASE = process.env.BASE_PATH ?? '/greenandbluealliance/';
 ```
+
+El workflow no las sobrescribe, a propósito: así cualquier construcción produce las mismas
+rutas y no hay dos sitios que puedan desincronizarse. Un `npm run build` a secas ya genera
+la salida que se publica.
 
 Todo lo que apunta a una ruta interna pasa por el ayudante `url()` de
 [`src/lib/url.ts`](src/lib/url.ts) o por `import.meta.env.BASE_URL`, y `robots.txt` se
-genera en el build desde [`src/pages/robots.txt.ts`](src/pages/robots.txt.ts). Cambiar de
-ubicación es, por tanto, cuestión de tocar esas dos variables.
+genera en el build desde [`src/pages/robots.txt.ts`](src/pages/robots.txt.ts).
 
-Para reproducir en local exactamente lo que construye el workflow, usa **PowerShell**
-(Git Bash convierte las rutas que empiezan por `/` en rutas de Windows y rompe el build):
-
-```powershell
-$env:SITE_URL = "https://serwii01.github.io"; $env:BASE_PATH = "/greenandbluealliance/"; npm run build
-```
+> **Ojo al relanzar un despliegue.** «Re-run jobs» sobre una ejecución antigua reconstruye
+> **el commit de esa ejecución**, no el último. Si esa versión tenía otra configuración,
+> pisará el despliegue bueno. Para volver a publicar el estado actual usa
+> **Actions → Desplegar en GitHub Pages → Run workflow** sobre `main`.
 
 ### Pasar a dominio propio
 
-1. En [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), pon `SITE_URL` al
-   dominio nuevo y `BASE_PATH: /`.
-2. Actualiza la constante `SITE` de `astro.config.mjs`, que es el valor por defecto de las
-   construcciones locales.
-3. Crea `public/CNAME` con el dominio, sin `https://` ni barra final.
-4. Apunta el DNS a GitHub Pages y activa **Enforce HTTPS** en Settings → Pages.
+1. En [`astro.config.mjs`](astro.config.mjs), pon `SITE` al dominio nuevo y `BASE` a `'/'`.
+2. Crea `public/CNAME` con el dominio, sin `https://` ni barra final.
+3. Apunta el DNS a GitHub Pages y activa **Enforce HTTPS** en Settings → Pages.
 
 ## Pendiente de completar
 
