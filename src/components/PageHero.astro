@@ -1,0 +1,28 @@
+---
+import Wave from './Wave.astro';
+import Aurora from './Aurora.astro';
+
+interface Props {
+  eyebrow?: string;
+  titulo: string;
+  intro?: string;
+  /** Color del bloque que sigue al hero, para la curva inferior. */
+  siguiente?: string;
+}
+const { eyebrow, titulo, intro, siguiente = '#ffffff' } = Astro.props;
+---
+<section class="relative overflow-hidden">
+  <Aurora reparto="ancho" />
+
+  <div class="gb-wrap relative pb-20 pt-16 sm:pb-24 sm:pt-20">
+    <div class="max-w-3xl">
+      {eyebrow && (
+        <p class="mb-4 text-xs font-bold uppercase tracking-[0.22em] text-white/75">{eyebrow}</p>
+      )}
+      <h1 class="text-4xl text-white sm:text-5xl lg:text-[3.4rem] lg:leading-[1.08]">{titulo}</h1>
+      {intro && <p class="mt-6 max-w-2xl text-lg leading-relaxed text-white/90">{intro}</p>}
+    </div>
+  </div>
+
+  <Wave color={siguiente} class="relative" />
+</section>

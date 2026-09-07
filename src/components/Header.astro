@@ -1,0 +1,106 @@
+---
+import Logo from './Logo.astro';
+import Icono from './Icono.astro';
+import { nav } from '../config';
+import { url, isActive } from '../lib/url';
+
+const actual = Astro.url.pathname;
+---
+<a
+  href="#contenido"
+  class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-navy-800 focus:px-5 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-white"
+>
+  Saltar al contenido
+</a>
+
+<header
+  id="cabecera"
+  class="sticky top-0 z-40 border-b border-slate-line/80 bg-white/90 backdrop-blur-md supports-[backdrop-filter]:bg-white/75"
+>
+  <div class="gb-wrap flex h-[4.5rem] items-center justify-between gap-4">
+    <Logo tam={40} />
+
+    <nav aria-label="Navegación principal" class="hidden lg:block">
+      <ul class="flex items-center gap-1">
+        {nav.map((item) => (
+          <li>
+            <a
+              href={url(item.href)}
+              aria-current={isActive(actual, item.href) ? 'page' : undefined}
+              class:list={[
+                'rounded-full px-3.5 py-2 font-display text-sm font-semibold transition',
+                isActive(actual, item.href)
+                  ? 'bg-slate-mist text-navy-800'
+                  : 'text-slate-body hover:bg-slate-mist hover:text-navy-800',
+              ]}
+            >
+              {item.titulo}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a
+        href={url('/contacto/')}
+        class="hidden gb-gradient-profundo rounded-full px-5 py-2.5 font-display text-sm font-semibold text-white shadow-card transition hover:brightness-110 sm:inline-flex"
+      >
+        Contacto
+      </a>
+      <button
+        type="button"
+        id="menu-boton"
+        aria-controls="menu-movil"
+        aria-expanded="false"
+        class="inline-flex size-11 items-center justify-center rounded-full text-navy-800 transition hover:bg-slate-mist lg:hidden"
+      >
+        <span class="sr-only">Abrir menú</span>
+        <Icono nombre="menu" class="size-6" />
+      </button>
+    </div>
+  </div>
+
+  <div id="menu-movil" hidden class="border-t border-slate-line bg-white lg:hidden">
+    <nav aria-label="Navegación principal (móvil)" class="gb-wrap py-4">
+      <ul class="space-y-1">
+        {[...nav, { titulo: 'Contacto', href: '/contacto/' }].map((item) => (
+          <li>
+            <a
+              href={url(item.href)}
+              aria-current={isActive(actual, item.href) ? 'page' : undefined}
+              class:list={[
+                'block rounded-xl px-4 py-3 font-display font-semibold transition',
+                isActive(actual, item.href)
+                  ? 'bg-slate-mist text-navy-800'
+                  : 'text-slate-body hover:bg-slate-mist hover:text-navy-800',
+              ]}
+            >
+              {item.titulo}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const boton = document.getElementById('menu-boton');
+  const menu = document.getElementById('menu-movil');
+  if (boton && menu) {
+    boton.addEventListener('click', () => {
+      const abierto = boton.getAttribute('aria-expanded') === 'true';
+      boton.setAttribute('aria-expanded', String(!abierto));
+      menu.hidden = abierto;
+      boton.querySelector('.sr-only')!.textContent = abierto ? 'Abrir menú' : 'Cerrar menú';
+    });
+    // Cierra el menu al volver a escritorio
+    matchMedia('(min-width: 1024px)').addEventListener('change', (e) => {
+      if (e.matches) {
+        menu.hidden = true;
+        boton.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+</script>

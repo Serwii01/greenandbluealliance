@@ -1,0 +1,29 @@
+---
+interface Props {
+  /** Color de la forma: el de la seccion que viene DESPUES. */
+  color?: string;
+  /** Color del bloque del que sale la curva: el de la seccion ANTERIOR. */
+  fondo?: string;
+  /** Invierte la curva verticalmente. */
+  invertida?: boolean;
+  class?: string;
+}
+const { color = '#ffffff', fondo = 'transparent', invertida = false, class: cls = '' } = Astro.props;
+---
+<div
+  class={`pointer-events-none -mb-px w-full overflow-hidden leading-[0] ${cls}`}
+  style={`background-color:${fondo}`}
+  aria-hidden="true"
+>
+  <svg
+    viewBox="0 0 1440 80"
+    preserveAspectRatio="none"
+    class={`block h-10 w-full sm:h-14 ${invertida ? 'rotate-180' : ''}`}
+    role="presentation"
+  >
+    <path
+      d="M0,32 C180,72 340,72 520,48 C700,24 860,0 1040,8 C1200,15 1330,40 1440,56 L1440,80 L0,80 Z"
+      fill={color}
+    />
+  </svg>
+</div>

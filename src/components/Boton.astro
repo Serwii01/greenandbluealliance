@@ -1,0 +1,30 @@
+---
+import { url } from '../lib/url';
+
+interface Props {
+  href: string;
+  variante?: 'primario' | 'secundario' | 'fantasma' | 'claro' | 'contorno';
+  class?: string;
+}
+const { href, variante = 'primario', class: cls = '' } = Astro.props;
+
+const base =
+  'inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-display text-sm font-semibold transition duration-200';
+const variantes = {
+  primario: 'gb-gradient-profundo text-white shadow-card hover:shadow-lift hover:brightness-110',
+  secundario: 'border-2 border-navy-800 text-navy-800 hover:bg-navy-800 hover:text-white',
+  fantasma: 'text-navy-800 hover:text-blue-600',
+  claro: 'bg-white text-navy-800 shadow-card hover:bg-blue-50',
+  contorno: 'bg-white/10 text-white ring-1 ring-inset ring-white/40 backdrop-blur-sm hover:bg-white/20',
+};
+const externo = /^(https?:|mailto:|tel:)/.test(href);
+---
+<a
+  href={url(href)}
+  class={`${base} ${variantes[variante]} ${cls}`}
+  {...externo && !href.startsWith('mailto:') && !href.startsWith('tel:')
+    ? { target: '_blank', rel: 'noopener noreferrer' }
+    : {}}
+>
+  <slot />
+</a>

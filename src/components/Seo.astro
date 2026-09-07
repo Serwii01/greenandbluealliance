@@ -1,0 +1,58 @@
+---
+import { site, contacto, redes } from '../config';
+
+interface Props {
+  titulo: string;
+  descripcion: string;
+  /** Ruta relativa de la imagen social, dentro de /public. */
+  imagen?: string;
+  /** Anade JSON-LD de la organizacion (solo en la portada). */
+  organizacion?: boolean;
+}
+const { titulo, descripcion, imagen = 'og.jpg', organizacion = false } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const imagenAbs = new URL(`${import.meta.env.BASE_URL}${imagen}`.replace(/\/{2,}/g, '/'), Astro.site).href;
+const tituloCompleto = titulo === site.nombre ? `${site.nombre} — ${site.claim}` : `${titulo} | ${site.nombre}`;
+
+const jsonLd = organizacion
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'NGO',
+      name: site.nombre,
+      alternateName: 'Green and Blue Alliance',
+      slogan: site.claim,
+      description: site.descripcion,
+      url: Astro.site?.href,
+      email: contacto.email,
+      areaServed: 'Andalucía, España',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Sevilla',
+        addressRegion: 'Andalucía',
+        addressCountry: 'ES',
+      },
+      sameAs: redes.filter((r) => r.url).map((r) => r.url),
+    }
+  : null;
+---
+<title>{tituloCompleto}</title>
+<meta name="description" content={descripcion} />
+<link rel="canonical" href={canonical} />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={site.nombre} />
+<meta property="og:locale" content="es_ES" />
+<meta property="og:title" content={tituloCompleto} />
+<meta property="og:description" content={descripcion} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={imagenAbs} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={tituloCompleto} />
+<meta name="twitter:description" content={descripcion} />
+<meta name="twitter:image" content={imagenAbs} />
+
+{jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}

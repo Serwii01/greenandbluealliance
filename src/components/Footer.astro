@@ -1,0 +1,85 @@
+---
+import Logo from './Logo.astro';
+import Icono from './Icono.astro';
+import { site, contacto, redes, nav } from '../config';
+import { url } from '../lib/url';
+
+const activas = redes.filter((r) => r.url);
+const anio = new Date().getFullYear();
+
+const legales = [
+  { titulo: 'Aviso legal', href: '/aviso-legal/' },
+  { titulo: 'Privacidad', href: '/privacidad/' },
+];
+---
+<footer class="bg-navy-900 text-blue-100/70">
+  <div class="gb-wrap py-14 sm:py-16">
+    <div class="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
+      <div>
+        <Logo variante="oscuro" tam={48} />
+        <p class="mt-5 max-w-sm text-[0.95rem] leading-relaxed">
+          Acción directa, excelencia técnica y apoyo ambiental global para regenerar
+          los ecosistemas terrestres y marinos de Andalucía.
+        </p>
+        <p class="mt-5 flex items-center gap-2 text-sm">
+          <Icono nombre="lugar" class="size-4 shrink-0 text-leaf-500" />
+          {site.ubicacion}
+        </p>
+        <a
+          href={`mailto:${contacto.email}`}
+          class="mt-2 inline-flex items-center gap-2 text-sm transition hover:text-white"
+        >
+          <Icono nombre="mail" class="size-4 shrink-0 text-leaf-500" />
+          {contacto.email}
+        </a>
+      </div>
+
+      <nav aria-label="Mapa del sitio">
+        <h2 class="font-display text-xs font-bold uppercase tracking-[0.2em] text-leaf-500">Navegación</h2>
+        <ul class="mt-5 space-y-2.5 text-[0.95rem]">
+          {[...nav, { titulo: 'Contacto', href: '/contacto/' }].map((item) => (
+            <li>
+              <a href={url(item.href)} class="transition hover:text-white">{item.titulo}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <div>
+        <h2 class="font-display text-xs font-bold uppercase tracking-[0.2em] text-leaf-500">Ejes de acción</h2>
+        <ul class="mt-5 space-y-2.5 text-[0.95rem]">
+          <li><a href={url('/que-hacemos/#green')} class="transition hover:text-white">Eje Green — Ecosistemas terrestres</a></li>
+          <li><a href={url('/que-hacemos/#blue')} class="transition hover:text-white">Eje Blue — Océano y litoral</a></li>
+          <li><a href={url('/que-hacemos/#hub')} class="transition hover:text-white">Hub de apoyo y asesoría</a></li>
+        </ul>
+
+        {activas.length > 0 && (
+          <ul class="mt-7 flex gap-2">
+            {activas.map((r) => (
+              <li>
+                <a
+                  href={r.url!}
+                  target="_blank"
+                  rel="noopener noreferrer me"
+                  class="inline-flex size-10 items-center justify-center rounded-full bg-white/8 transition hover:bg-white/15 hover:text-white"
+                >
+                  <span class="sr-only">{r.nombre}</span>
+                  <Icono nombre={r.icono} class="size-[1.15rem]" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+
+    <div class="mt-12 flex flex-col gap-4 border-t border-white/10 pt-7 text-sm sm:flex-row sm:items-center sm:justify-between">
+      <p>&copy; {anio} {site.nombre}. Todos los derechos reservados.</p>
+      <ul class="flex gap-5">
+        {legales.map((l) => (
+          <li><a href={url(l.href)} class="transition hover:text-white">{l.titulo}</a></li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</footer>

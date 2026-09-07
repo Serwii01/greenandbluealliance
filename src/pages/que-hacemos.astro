@@ -1,0 +1,157 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import Card from '../components/Card.astro';
+import Boton from '../components/Boton.astro';
+import Icono from '../components/Icono.astro';
+import Wave from '../components/Wave.astro';
+
+const green = [
+  {
+    titulo: 'Santuarios de Interior',
+    texto:
+      'Regeneración intensiva de puntos negros, vertederos ilegales y zonas con pérdida severa de biodiversidad. Incorporamos actividades reales de impacto para voluntarios.',
+  },
+  {
+    titulo: 'Custodia del Territorio',
+    texto:
+      'Gestión activa y acuerdos con propietarios para proteger espacios de alto valor ecológico en riesgo.',
+  },
+  {
+    titulo: 'Educación Ambiental',
+    texto:
+      'Formación en centros educativos y foros empresariales para crear conciencia sobre la crisis climática.',
+  },
+];
+
+const blue = [
+  {
+    titulo: 'Expediciones Deep-Blue',
+    texto:
+      'Buceo técnico para localizar y retirar «redes fantasma», aparejos abandonados que siguen capturando fauna marina durante años.',
+  },
+  {
+    titulo: 'Patrullaje de litoral',
+    texto:
+      'Medición y eliminación de microplásticos en suspensión a lo largo de la costa, con embarcaciones operativas y protocolos de muestreo.',
+  },
+  {
+    titulo: 'Ruido marino',
+    texto:
+      'Medimos el ruido submarino para evaluar el nivel de estrés al que están sometidas las especies marinas de cada zona de actuación.',
+  },
+];
+
+const hub = [
+  {
+    titulo: 'Asesoría Técnica Especializada',
+    icono: 'microscopio' as const,
+    texto:
+      'Proporcionamos el know-how necesario para proyectos ambientales a empresas y administraciones. Diseñamos integralmente proyectos adaptados a cada ecosistema, gestionamos trámites administrativos, elaboramos informes de impacto ambiental rigurosos y ofrecemos formación en protocolos de limpieza y gestión de residuos.',
+  },
+  {
+    titulo: 'Micro-Grants',
+    icono: 'hoja' as const,
+    texto:
+      'Actuamos como dinamizadores del sector ambiental local mediante financiación directa de logística para grupos alineados con nuestra metodología.',
+  },
+  {
+    titulo: 'Puente de Patrocinio',
+    icono: 'megafono' as const,
+    texto:
+      'Conectamos empresas con proyectos locales para sus programas de responsabilidad social corporativa, asegurando que el dinero llega a intervenciones reales.',
+  },
+  {
+    titulo: 'Fondo de Emergencia',
+    icono: 'escudo' as const,
+    texto:
+      'Mantenemos una reserva destinada a intervenciones urgentes, para poder responder en horas cuando un ecosistema lo necesita.',
+  },
+];
+---
+
+<Base
+  titulo="Qué hacemos"
+  descripcion="Los tres frentes de Green & Blue Alliance: el eje Green de ecosistemas terrestres, el eje Blue de océano y litoral, y el hub de apoyo y asesoría para otras organizaciones."
+>
+  <PageHero
+    eyebrow="Ejes de actuación"
+    titulo="Intervenimos donde el daño ya está hecho"
+    intro="Dos ejes operativos sobre el terreno y un tercer espacio de apoyo con el que multiplicamos el trabajo de quienes ya están actuando."
+  />
+
+  {/* ---------- Eje Green ---------- */}
+  <Section
+    id="green"
+    acento="verde"
+    eyebrow="Eje Green — Ecosistemas terrestres"
+    titulo="Sin suelos sanos, no hay futuro"
+    intro="Intervenimos directamente para restaurar la salud de los suelos y la biodiversidad en Andalucía."
+  >
+    <div class="grid gap-6 md:grid-cols-3">
+      {green.map((g, i) => (
+        <Card titulo={g.titulo} indice={String(i + 1)} acento="verde">
+          <p>{g.texto}</p>
+        </Card>
+      ))}
+    </div>
+  </Section>
+
+  {/* ---------- Eje Blue ---------- */}
+  <Wave color="#033256" invertida />
+  <Section
+    id="blue"
+    fondo="navy"
+    eyebrow="Eje Blue — Océano y litoral"
+    titulo="El mar produce más de la mitad del oxígeno que respiramos"
+    intro="Somos especialistas en intervención acuática costera. El océano regula las emisiones globales y absorbe una parte decisiva del carbono atmosférico; protegerlo es protegernos."
+  >
+    <div class="grid gap-6 md:grid-cols-3">
+      {blue.map((b) => (
+        <article class="flex h-full flex-col rounded-2xl bg-white/6 p-7 ring-1 ring-inset ring-white/12 transition duration-300 hover:bg-white/10">
+          <Icono nombre="ola" class="size-7 text-blue-400" />
+          <h3 class="mt-5 text-xl text-white">{b.titulo}</h3>
+          <p class="mt-3 leading-relaxed text-blue-100/80">{b.texto}</p>
+        </article>
+      ))}
+    </div>
+
+    <div class="mt-12 rounded-2xl border border-white/10 bg-navy-950/50 p-7 sm:p-8">
+      <h3 class="text-lg text-white">La absorción oceánica de carbono</h3>
+      <p class="mt-3 max-w-3xl leading-relaxed text-blue-100/80">
+        La capacidad del océano para retirar CO₂ de la atmósfera se describe mediante el
+        ciclo del dióxido de carbono: el gas se disuelve en el agua superficial, se
+        transforma en carbonatos y una parte queda secuestrada en profundidad durante
+        siglos. Cada tonelada de plástico y cada aparejo abandonado que retiramos protege
+        ese mecanismo.
+      </p>
+    </div>
+  </Section>
+  <Wave color="#ffffff" fondo="#033256" />
+
+  {/* ---------- Hub ---------- */}
+  <Section
+    id="hub"
+    acento="azul"
+    eyebrow="Hub de apoyo y asesoría"
+    titulo="También trabajamos para que otros puedan actuar"
+    intro="Una parte de nuestra actividad no consiste en intervenir nosotros, sino en dar el conocimiento, el respaldo técnico y la financiación que a otros les falta."
+  >
+    <div class="grid gap-6 sm:grid-cols-2">
+      {hub.map((h) => (
+        <Card titulo={h.titulo} icono={h.icono} acento="azul">
+          <p>{h.texto}</p>
+        </Card>
+      ))}
+    </div>
+
+    <div class="mt-12 flex flex-wrap justify-center gap-3">
+      <Boton href="/metodologia/" variante="secundario">
+        Cómo medimos el impacto
+        <Icono nombre="flecha" class="size-4" />
+      </Boton>
+      <Boton href="/colabora/">Quiero colaborar</Boton>
+    </div>
+  </Section>
+</Base>

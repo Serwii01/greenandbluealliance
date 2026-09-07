@@ -1,0 +1,11 @@
+# Guardar siempre con LF en el repositorio: el sitio se construye en Linux (GitHub Actions).
+* text=auto eol=lf
+
+# Binarios: que Git no toque los finales de linea.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.woff2 binary
+*.pptx binary
+*.docx binary

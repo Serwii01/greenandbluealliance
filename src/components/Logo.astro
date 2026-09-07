@@ -1,0 +1,53 @@
+---
+import { Image } from 'astro:assets';
+import marca from '../assets/logo/logo-marca.png';
+import wordmarkColor from '../assets/logo/wordmark-color.png';
+import wordmarkBlanco from '../assets/logo/wordmark-blanco.png';
+import { site } from '../config';
+import { url } from '../lib/url';
+
+interface Props {
+  /** 'oscuro' usa el wordmark en blanco, para fondos oscuros. */
+  variante?: 'claro' | 'oscuro';
+  /** Altura del emblema en pixeles. */
+  tam?: number;
+  /** Si es false, solo se muestra el emblema. */
+  conTexto?: boolean;
+  class?: string;
+}
+
+const { variante = 'claro', tam = 44, conTexto = true, class: cls = '' } = Astro.props;
+const wordmark = variante === 'oscuro' ? wordmarkBlanco : wordmarkColor;
+
+// El emblema original es ligeramente mas ancho que alto.
+const anchoMarca = Math.round((tam * 730) / 692);
+// El wordmark se dimensiona en proporcion al emblema.
+const anchoTexto = Math.round(tam * 3.05);
+---
+
+<a
+  href={url('/')}
+  class={`group inline-flex items-center gap-3 ${cls}`}
+  aria-label={`${site.nombre} — inicio`}
+>
+  <Image
+    src={marca}
+    alt=""
+    width={anchoMarca}
+    height={tam}
+    densities={[1, 2]}
+    loading="eager"
+    class="shrink-0 transition-transform duration-300 group-hover:scale-105"
+  />
+  {conTexto && (
+    <Image
+      src={wordmark}
+      alt=""
+      width={anchoTexto}
+      densities={[1, 2]}
+      loading="eager"
+      class="hidden h-auto shrink-0 sm:block"
+    />
+  )}
+  <span class="sr-only">{site.nombre} — {site.claim}</span>
+</a>

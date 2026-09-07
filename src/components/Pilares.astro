@@ -1,0 +1,20 @@
+---
+interface Props {
+  pilares: { titulo: string; texto: string }[];
+  acento?: 'verde' | 'azul' | 'navy';
+  class?: string;
+}
+const { pilares, acento = 'navy', class: cls = '' } = Astro.props;
+const puntos = { verde: 'bg-leaf-600', azul: 'bg-blue-500', navy: 'bg-navy-800' };
+---
+<ul class={`space-y-4 ${cls}`}>
+  {pilares.map((p) => (
+    <li class="flex gap-3.5">
+      <span class={`mt-2 size-2 shrink-0 rounded-full ${puntos[acento]}`} aria-hidden="true"></span>
+      <p class="text-[0.975rem] leading-relaxed">
+        <strong class="font-display font-semibold text-navy-800">{p.titulo}:</strong>{' '}
+        {p.texto}
+      </p>
+    </li>
+  ))}
+</ul>

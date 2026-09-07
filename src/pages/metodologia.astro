@@ -1,0 +1,176 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import Card from '../components/Card.astro';
+import Boton from '../components/Boton.astro';
+import Icono from '../components/Icono.astro';
+import Wave from '../components/Wave.astro';
+
+const pilares = [
+  {
+    titulo: 'Rigor Científico',
+    icono: 'microscopio' as const,
+    acento: 'navy' as const,
+    texto:
+      'Estudios previos y posteriores a cada intervención. Protocolos que comparan el estado inicial con los resultados obtenidos, ofreciendo datos concretos y verificables.',
+  },
+  {
+    titulo: 'Tecnología Avanzada',
+    icono: 'dron' as const,
+    acento: 'azul' as const,
+    texto:
+      'Logística especializada para zonas complejas: buceo técnico, embarcaciones operativas en el litoral y uso de drones para la cartografía y el seguimiento preciso de las áreas de actuación.',
+  },
+  {
+    titulo: 'Sostenibilidad Temporal',
+    icono: 'reloj' as const,
+    acento: 'verde' as const,
+    texto:
+      'Monitoreo a largo plazo. No abandonamos el ecosistema tras la intervención; realizamos un seguimiento continuado para asegurar que la recuperación se consolida estructuralmente.',
+  },
+];
+
+const ciclo = [
+  {
+    titulo: 'Diagnóstico',
+    texto:
+      'Cartografiamos la zona, documentamos el estado inicial y fijamos los indicadores que se van a medir. Nada empieza sin una línea base.',
+  },
+  {
+    titulo: 'Intervención',
+    texto:
+      'Actuamos con el equipo y la técnica que exige cada ecosistema, en tierra o bajo el agua, con protocolos de seguridad y de gestión de residuos.',
+  },
+  {
+    titulo: 'Medición',
+    texto:
+      'Repetimos el estudio con la misma metodología del diagnóstico. La comparación entre ambos es la prueba del resultado, no una estimación.',
+  },
+  {
+    titulo: 'Seguimiento',
+    texto:
+      'Volvemos. Comprobamos durante meses que la recuperación se consolida y corregimos si el ecosistema no evoluciona como se esperaba.',
+  },
+];
+
+const valor = [
+  {
+    titulo: 'Impacto Medible',
+    icono: 'grafico' as const,
+    texto:
+      'Datos científicos rigurosos. Informes personalizados con métricas verificables: kilómetros de litoral limpiados, toneladas de residuos retiradas y hectáreas restauradas.',
+  },
+  {
+    titulo: 'Seguridad Jurídica',
+    icono: 'escudo' as const,
+    texto:
+      'Garantía de cumplimiento normativo. Acompañamiento legal ante organismos reguladores, asegurando que cada proyecto de RSC cumple los requisitos europeos.',
+  },
+  {
+    titulo: 'Visibilidad Mediática',
+    icono: 'megafono' as const,
+    texto:
+      'Conexión directa con el deporte de élite y eventos de alto nivel a través de «No Planet B». Cobertura de las acciones de campo con reportajes audiovisuales.',
+  },
+];
+---
+
+<Base
+  titulo="Metodología"
+  descripcion="Rigor científico, tecnología avanzada y seguimiento a largo plazo. Cómo Green & Blue Alliance mide y documenta cada intervención: cero greenwashing, solo resultados verificables."
+>
+  <PageHero
+    eyebrow="Modelo estratégico de excelencia"
+    titulo="Intervenir, medir, regenerar"
+    intro="Lo que separa una actuación real de un gesto simbólico no es la intención: es el protocolo. Este es el nuestro."
+    siguiente="#f8fafc"
+  />
+
+  <Section fondo="mist" titulo="Tres exigencias innegociables">
+    <div class="grid gap-6 md:grid-cols-3">
+      {pilares.map((p) => (
+        <Card titulo={p.titulo} icono={p.icono} acento={p.acento}>
+          <p>{p.texto}</p>
+        </Card>
+      ))}
+    </div>
+  </Section>
+
+  {/* ---------- El ciclo ---------- */}
+  <Section
+    eyebrow="El ciclo virtuoso"
+    titulo="Cuatro fases en cada intervención"
+    intro="Ninguna fase es opcional. Si no podemos medir el antes y el después, no intervenimos."
+  >
+    <ol class="relative grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+      {ciclo.map((c, i) => (
+        <li class="relative">
+          <span
+            class="gb-gradient-profundo inline-flex size-12 items-center justify-center rounded-2xl font-display text-lg font-bold text-white shadow-card"
+          >
+            {i + 1}
+          </span>
+          <h3 class="mt-5 text-xl">{c.titulo}</h3>
+          <p class="mt-2.5 leading-relaxed">{c.texto}</p>
+        </li>
+      ))}
+    </ol>
+
+    <p class="mx-auto mt-14 max-w-2xl rounded-2xl border border-leaf-100 bg-leaf-50 p-6 text-center leading-relaxed text-leaf-800">
+      Este ciclo —intervenir, medir, regenerar— es el núcleo metodológico que nos
+      distingue en la protección del territorio andaluz.
+    </p>
+  </Section>
+
+  {/* ---------- Impacto verificado ---------- */}
+  <Wave color="#033256" invertida />
+  <Section fondo="navy" eyebrow="Impacto verificado" titulo="Cero greenwashing">
+    <div class="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:gap-16">
+      <p class="gb-gradient-text font-display text-[6rem] font-bold leading-none sm:text-[8rem]">
+        100<span class="text-[0.6em]">%</span>
+      </p>
+      <div class="space-y-5 text-lg leading-relaxed">
+        <p>
+          <strong class="font-semibold text-white">
+            De nuestras intervenciones están documentadas
+          </strong>{' '}
+          con estudios científicos previos y posteriores a la actuación. Cada acción
+          genera datos comprobables que se publican.
+        </p>
+        <p>
+          Solo resultados reales, medibles y publicados. Preferimos decir «esto es lo que
+          hemos conseguido y así lo hemos medido» antes que hablar de intenciones.
+        </p>
+        <p class="text-[0.95rem] text-blue-100/60">
+          Somos una organización de reciente constitución. Publicaremos en esta página las
+          cifras de impacto acumulado —kilómetros de litoral, toneladas retiradas y
+          hectáreas restauradas— a medida que las intervenciones se completen y se
+          verifiquen.
+        </p>
+      </div>
+    </div>
+  </Section>
+  <Wave color="#ffffff" fondo="#033256" />
+
+  {/* ---------- Propuesta de valor ---------- */}
+  <Section
+    eyebrow="Para empresas y administraciones"
+    titulo="Qué obtiene quien colabora con nosotros"
+    intro="El rigor no es solo una exigencia ética: es lo que permite a una empresa justificar su inversión y a una administración cumplir con la normativa."
+  >
+    <div class="grid gap-6 md:grid-cols-3">
+      {valor.map((v, i) => (
+        <Card titulo={v.titulo} icono={v.icono} acento={i === 0 ? 'verde' : i === 1 ? 'navy' : 'azul'}>
+          <p>{v.texto}</p>
+        </Card>
+      ))}
+    </div>
+    <div class="mt-12 text-center">
+      <Boton href="/colabora/">
+        Ver formas de colaborar
+        <Icono nombre="flecha" class="size-4" />
+      </Boton>
+    </div>
+  </Section>
+</Base>

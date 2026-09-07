@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import Boton from '../components/Boton.astro';
+import Aurora from '../components/Aurora.astro';
+import Icono from '../components/Icono.astro';
+import { url } from '../lib/url';
+
+const atajos = [
+  { titulo: 'Qué hacemos', href: '/que-hacemos/' },
+  { titulo: 'Metodología', href: '/metodologia/' },
+  { titulo: 'Equipo', href: '/equipo/' },
+  { titulo: 'Colabora', href: '/colabora/' },
+  { titulo: 'Contacto', href: '/contacto/' },
+];
+---
+
+<Base
+  titulo="Página no encontrada"
+  descripcion="La página que buscas no existe o ha cambiado de dirección."
+>
+  <section class="relative flex min-h-[70vh] items-center overflow-hidden">
+    <Aurora reparto="ancho" />
+
+    <div class="gb-wrap relative py-20 text-center">
+      <p class="gb-gradient-text font-display text-[5rem] font-bold leading-none sm:text-[7rem]">
+        404
+      </p>
+      <h1 class="mt-4 text-3xl text-white sm:text-4xl">Esta página no existe</h1>
+      <p class="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-white/85">
+        Puede que el enlace esté mal escrito o que la página haya cambiado de dirección.
+        Desde aquí puedes volver a cualquier parte del sitio.
+      </p>
+
+      <div class="mt-9 flex justify-center">
+        <Boton href="/" variante="claro">
+          Volver al inicio
+          <Icono nombre="flecha" class="size-4" />
+        </Boton>
+      </div>
+
+      <ul class="mt-10 flex flex-wrap justify-center gap-2">
+        {atajos.map((a) => (
+          <li>
+            <a
+              href={url(a.href)}
+              class="inline-flex rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-white ring-1 ring-inset ring-white/25 transition hover:bg-white/20"
+            >
+              {a.titulo}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>

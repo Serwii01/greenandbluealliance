@@ -1,0 +1,88 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Section from '../../components/Section.astro';
+import Icono from '../../components/Icono.astro';
+import { url } from '../../lib/url';
+
+const equipo = (await getCollection('equipo')).sort((a, b) => a.data.orden - b.data.orden);
+
+const junta = equipo.filter((p) => p.data.orden <= 4);
+const resto = equipo.filter((p) => p.data.orden > 4);
+---
+
+<Base
+  titulo="Equipo"
+  descripcion="Las ocho personas que forman Green & Blue Alliance: trabajo social, economía, derecho, educación, administración y voluntariado al servicio de la regeneración del planeta."
+>
+  <PageHero
+    eyebrow="Quiénes somos"
+    titulo="Ocho trayectorias, un mismo objetivo"
+    intro="Trabajo social, economía, derecho, pedagogía, logística y administración. La diversidad del equipo no es casual: la justicia climática y la justicia social van de la mano."
+    siguiente="#f8fafc"
+  />
+
+  <Section fondo="mist" titulo="Junta directiva">
+    <div class="grid gap-7 sm:grid-cols-2 lg:grid-cols-4">
+      {junta.map((p) => (
+        <a
+          href={url(`/equipo/${p.id}/`)}
+          class="group flex flex-col overflow-hidden rounded-2xl border border-slate-line bg-white shadow-card transition duration-300 hover:-translate-y-1 hover:shadow-lift"
+        >
+          <Image
+            src={p.data.fotoFicha}
+            alt={p.data.alt}
+            widths={[400, 800]}
+            sizes="(min-width: 1024px) 280px, (min-width: 640px) 45vw, 90vw"
+            class="aspect-4/5 w-full object-cover"
+          />
+          <div class="flex flex-1 flex-col p-5">
+            <p class="font-display text-[0.7rem] font-bold uppercase tracking-[0.16em] text-leaf-700">
+              {p.data.cargo}
+            </p>
+            <h3 class="mt-2 text-lg leading-snug">{p.data.nombre}</h3>
+            <span class="mt-auto inline-flex items-center gap-1.5 pt-4 font-display text-sm font-semibold text-blue-600">
+              Ver perfil
+              <Icono nombre="flecha" class="size-4 transition-transform group-hover:translate-x-1" />
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </Section>
+
+  <Section
+    titulo="Actividades, voluntariado y engagement"
+    intro="El equipo que sostiene el trabajo de campo, moviliza a los voluntarios y conecta la alianza con su comunidad."
+  >
+    <div class="grid gap-7 sm:grid-cols-2 lg:grid-cols-4">
+      {resto.map((p) => (
+        <a
+          href={url(`/equipo/${p.id}/`)}
+          class="group flex flex-col overflow-hidden rounded-2xl border border-slate-line bg-white shadow-card transition duration-300 hover:-translate-y-1 hover:shadow-lift"
+        >
+          <Image
+            src={p.data.fotoFicha}
+            alt={p.data.alt}
+            widths={[400, 800]}
+            sizes="(min-width: 1024px) 280px, (min-width: 640px) 45vw, 90vw"
+            loading="lazy"
+            class="aspect-4/5 w-full object-cover"
+          />
+          <div class="flex flex-1 flex-col p-5">
+            <p class="font-display text-[0.7rem] font-bold uppercase tracking-[0.16em] text-blue-600">
+              {p.data.cargo}
+            </p>
+            <h3 class="mt-2 text-lg leading-snug">{p.data.nombre}</h3>
+            <span class="mt-auto inline-flex items-center gap-1.5 pt-4 font-display text-sm font-semibold text-blue-600">
+              Ver perfil
+              <Icono nombre="flecha" class="size-4 transition-transform group-hover:translate-x-1" />
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </Section>
+</Base>

@@ -1,0 +1,49 @@
+---
+interface Props {
+  id?: string;
+  eyebrow?: string;
+  titulo?: string;
+  intro?: string;
+  /** Alineacion del encabezado. */
+  centro?: boolean;
+  /** Tono de fondo. */
+  fondo?: 'blanco' | 'mist' | 'verde' | 'azul' | 'navy';
+  acento?: 'verde' | 'azul' | 'navy';
+  class?: string;
+}
+const {
+  id, eyebrow, titulo, intro, centro = false,
+  fondo = 'blanco', acento = 'navy', class: cls = '',
+} = Astro.props;
+
+const fondos = {
+  blanco: 'bg-white',
+  mist: 'bg-slate-mist',
+  verde: 'bg-leaf-50',
+  azul: 'bg-blue-50',
+  navy: 'bg-navy-900 text-blue-100/80',
+};
+const acentos = {
+  verde: 'text-leaf-700',
+  azul: 'text-blue-600',
+  navy: fondo === 'navy' ? 'text-leaf-500' : 'text-navy-800',
+};
+const tituloColor = fondo === 'navy' ? 'text-white' : '';
+const introColor = fondo === 'navy' ? 'text-blue-100/80' : 'text-slate-body';
+---
+<section id={id} class={`py-16 sm:py-20 lg:py-24 ${fondos[fondo]} ${cls}`}>
+  <div class="gb-wrap">
+    {(eyebrow || titulo || intro) && (
+      <header class={`max-w-3xl ${centro ? 'mx-auto text-center' : ''}`}>
+        {eyebrow && (
+          <p class={`mb-3 text-xs font-bold uppercase tracking-[0.2em] ${acentos[acento]}`}>{eyebrow}</p>
+        )}
+        {titulo && <h2 class={`text-3xl sm:text-4xl ${tituloColor}`}>{titulo}</h2>}
+        {intro && <p class={`mt-5 text-lg leading-relaxed ${introColor}`}>{intro}</p>}
+      </header>
+    )}
+    <div class={eyebrow || titulo || intro ? 'mt-12' : ''}>
+      <slot />
+    </div>
+  </div>
+</section>

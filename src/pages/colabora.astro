@@ -1,0 +1,172 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import Card from '../components/Card.astro';
+import Boton from '../components/Boton.astro';
+import Icono from '../components/Icono.astro';
+import Wave from '../components/Wave.astro';
+import { contacto } from '../config';
+
+const formas = [
+  {
+    titulo: 'Patrocina una intervención',
+    icono: 'escudo' as const,
+    acento: 'navy' as const,
+    texto:
+      'Financia una actuación concreta y recibe el informe de impacto con métricas verificables, el acompañamiento legal para justificarla y la cobertura audiovisual de la acción.',
+    cta: 'Hablar de patrocinio',
+  },
+  {
+    titulo: 'Actúa como voluntario',
+    icono: 'hoja' as const,
+    acento: 'verde' as const,
+    texto:
+      'Participa sobre el terreno en los santuarios de interior y en las jornadas de litoral. Incorporamos actividades reales de impacto, no tareas simbólicas.',
+    cta: 'Quiero ser voluntario',
+  },
+  {
+    titulo: 'Difunde la misión',
+    icono: 'megafono' as const,
+    acento: 'azul' as const,
+    texto:
+      'Lleva el mensaje a tu empresa, tu centro educativo o tu club. La educación ambiental es parte del trabajo y necesitamos altavoces que la sostengan.',
+    cta: 'Proponer una charla',
+  },
+];
+
+const canales = [
+  {
+    n: '01',
+    titulo: 'Autofinanciación',
+    texto:
+      'Consultoría técnica a empresas, servicios de sostenibilidad y auditorías. Es nuestro pilar de independencia: los ingresos se reinvierten en la misión.',
+  },
+  {
+    n: '02',
+    titulo: 'Teaming / Comunidad',
+    texto:
+      'Microdonaciones periódicas de socios que conforman un fondo social permanente destinado a micro-subvenciones para proyectos externos.',
+  },
+  {
+    n: '03',
+    titulo: 'Crowdfunding',
+    texto:
+      'Campañas para hitos de alto impacto: adquisición de maquinaria, financiación de expediciones deep-blue o drones de monitoreo.',
+  },
+  {
+    n: '04',
+    titulo: 'Subvenciones públicas',
+    texto:
+      'Fondos europeos y autonómicos para innovación ambiental, con un equipo dedicado exclusivamente a la captación y a la justificación rigurosa.',
+  },
+];
+
+const valor = [
+  {
+    titulo: 'Visibilidad Mediática',
+    texto:
+      'Conexión directa con el deporte de élite y eventos de alto nivel a través de «No Planet B», con reportajes audiovisuales de las acciones de campo.',
+  },
+  {
+    titulo: 'Seguridad Jurídica',
+    texto:
+      'Acompañamiento legal ante organismos reguladores para asegurar que cada proyecto de RSC cumple los requisitos europeos.',
+  },
+  {
+    titulo: 'Impacto Medible',
+    texto:
+      'Informes personalizados con métricas verificables: kilómetros de litoral limpiados, toneladas de residuos retiradas y hectáreas restauradas.',
+  },
+];
+---
+
+<Base
+  titulo="Colabora"
+  descripcion="Patrocina una intervención, actúa como voluntario o difunde la misión. Formas de colaborar con Green & Blue Alliance y estrategia de financiación independiente."
+>
+  <PageHero
+    eyebrow="Únete a la alianza"
+    titulo="El planeta no puede esperar. Nosotros tampoco"
+    intro="La transformación se construye ecosistema a ecosistema. Hay tres maneras de sumarte, y todas hacen falta."
+  />
+
+  {/* ---------- Formas de colaborar ---------- */}
+  <Section titulo="Tres maneras de sumarte">
+    <div class="grid gap-6 md:grid-cols-3">
+      {formas.map((f) => (
+        <Card titulo={f.titulo} icono={f.icono} acento={f.acento}>
+          <p>{f.texto}</p>
+          <p class="mt-5">
+            <a
+              href={`mailto:${contacto.email}?subject=${encodeURIComponent(f.cta)}`}
+              class="inline-flex items-center gap-1.5 font-display text-sm font-semibold text-blue-600 transition hover:text-navy-800"
+            >
+              {f.cta}
+              <Icono nombre="flecha" class="size-4" />
+            </a>
+          </p>
+        </Card>
+      ))}
+    </div>
+  </Section>
+
+  {/* ---------- Propuesta de valor ---------- */}
+  <Wave color="#033256" invertida />
+  <Section
+    fondo="navy"
+    eyebrow="Propuesta de valor"
+    titulo="Qué recibe una empresa que colabora"
+    intro="Colaborar con nosotros no es hacer una donación a ciegas. Es contratar rigor, respaldo y una historia que se puede contar con datos."
+  >
+    <div class="grid gap-6 md:grid-cols-3">
+      {valor.map((v) => (
+        <article class="flex h-full flex-col rounded-2xl bg-white/6 p-7 ring-1 ring-inset ring-white/12">
+          <Icono nombre="check" class="size-6 text-leaf-500" />
+          <h3 class="mt-4 text-lg text-white">{v.titulo}</h3>
+          <p class="mt-2.5 leading-relaxed text-blue-100/80">{v.texto}</p>
+        </article>
+      ))}
+    </div>
+  </Section>
+  <Wave color="#f8fafc" fondo="#033256" />
+
+  {/* ---------- Financiación ---------- */}
+  <Section
+    fondo="mist"
+    eyebrow="Estrategia de financiación independiente"
+    titulo="Cuatro canales, una sola razón: no depender de nadie"
+    intro="Repartimos la financiación en cuatro fuentes para que ninguna condicione qué ecosistemas atendemos ni qué resultados publicamos."
+  >
+    <div class="grid gap-px overflow-hidden rounded-2xl border border-slate-line bg-slate-line sm:grid-cols-2">
+      {canales.map((c) => (
+        <div class="bg-white p-7 sm:p-8">
+          <span class="gb-gradient-text font-display text-3xl font-bold">{c.n}</span>
+          <h3 class="mt-3 text-xl">{c.titulo}</h3>
+          <p class="mt-2.5 leading-relaxed">{c.texto}</p>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  {/* ---------- Cierre ---------- */}
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 gb-gradient-profundo" aria-hidden="true"></div>
+    <div class="gb-wrap relative py-20 text-center sm:py-24">
+      <h2 class="text-3xl text-white sm:text-4xl">Empecemos por una conversación</h2>
+      <p class="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-white/90">
+        Cuéntanos qué te interesa —patrocinio, voluntariado, asesoría técnica o una
+        charla— y te respondemos con una propuesta concreta.
+      </p>
+      <div class="mt-9 flex flex-wrap justify-center gap-3">
+        <Boton href="/contacto/" variante="claro">
+          Ir a contacto
+          <Icono nombre="flecha" class="size-4" />
+        </Boton>
+        <Boton href={`mailto:${contacto.email}`} variante="contorno">
+          Escribir un correo
+        </Boton>
+      </div>
+    </div>
+  </section>
+</Base>

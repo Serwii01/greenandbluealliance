@@ -1,0 +1,132 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import Icono from '../components/Icono.astro';
+import { site, contacto, redes } from '../config';
+
+const activas = redes.filter((r) => r.url);
+
+const motivos = [
+  {
+    titulo: 'Patrocinio y RSC',
+    texto: 'Empresas que quieren financiar una intervención y justificarla con datos.',
+    asunto: 'Patrocinio / RSC',
+  },
+  {
+    titulo: 'Voluntariado',
+    texto: 'Quiero participar sobre el terreno en las acciones de campo.',
+    asunto: 'Voluntariado',
+  },
+  {
+    titulo: 'Asesoría técnica',
+    texto: 'Necesito apoyo para diseñar, tramitar o auditar un proyecto ambiental.',
+    asunto: 'Asesoría técnica',
+  },
+  {
+    titulo: 'Charlas y formación',
+    texto: 'Centros educativos, clubes y foros empresariales.',
+    asunto: 'Charlas y formación',
+  },
+  {
+    titulo: 'Prensa',
+    texto: 'Solicitudes de entrevista, material gráfico y datos de las intervenciones.',
+    asunto: 'Prensa',
+  },
+  {
+    titulo: 'Micro-Grants',
+    texto: 'Grupos ambientales que buscan financiación logística para su proyecto.',
+    asunto: 'Micro-Grants',
+  },
+];
+---
+
+<Base
+  titulo="Contacto"
+  descripcion="Escríbenos para patrocinar una intervención, sumarte como voluntario, solicitar asesoría técnica o proponer una charla. Green & Blue Alliance, Sevilla."
+>
+  <PageHero
+    eyebrow="Hablemos"
+    titulo="Cuéntanos qué necesitas"
+    intro="Respondemos a todos los correos. Cuanto más concreto sea el mensaje, más concreta será la propuesta que te devolvemos."
+  />
+
+  <Section>
+    <div class="grid gap-10 lg:grid-cols-[1fr_1.25fr] lg:gap-16">
+      <div class="space-y-6">
+        <a
+          href={`mailto:${contacto.email}`}
+          class="group flex items-start gap-4 rounded-2xl border border-slate-line bg-white p-6 shadow-card transition hover:-translate-y-0.5 hover:shadow-lift"
+        >
+          <span class="inline-flex size-11 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+            <Icono nombre="mail" />
+          </span>
+          <span>
+            <span class="block font-display font-semibold text-navy-800">Correo electrónico</span>
+            <span class="mt-1 block break-all text-[0.95rem] text-blue-600 group-hover:underline">
+              {contacto.email}
+            </span>
+          </span>
+        </a>
+
+        <div class="flex items-start gap-4 rounded-2xl border border-slate-line bg-white p-6 shadow-card">
+          <span class="inline-flex size-11 shrink-0 items-center justify-center rounded-xl bg-leaf-50 text-leaf-700">
+            <Icono nombre="lugar" />
+          </span>
+          <span>
+            <span class="block font-display font-semibold text-navy-800">Dónde estamos</span>
+            <span class="mt-1 block text-[0.95rem]">{site.ubicacion}</span>
+            <span class="mt-1 block text-[0.95rem]">
+              Actuamos en todo el territorio y el litoral andaluz.
+            </span>
+          </span>
+        </div>
+
+        {activas.length > 0 && (
+          <div class="rounded-2xl border border-slate-line bg-white p-6 shadow-card">
+            <p class="font-display font-semibold text-navy-800">Redes sociales</p>
+            <ul class="mt-4 flex flex-wrap gap-2">
+              {activas.map((r) => (
+                <li>
+                  <a
+                    href={r.url!}
+                    target="_blank"
+                    rel="noopener noreferrer me"
+                    class="inline-flex items-center gap-2 rounded-full bg-slate-mist px-4 py-2.5 text-sm font-semibold text-navy-800 transition hover:bg-blue-50 hover:text-blue-600"
+                  >
+                    <Icono nombre={r.icono} class="size-4" />
+                    {r.nombre}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+
+      <div>
+        <h2 class="text-2xl">Escribe directamente sobre el tema que te interesa</h2>
+        <p class="mt-3 leading-relaxed">
+          Cada enlace abre tu programa de correo con el asunto ya puesto, para que llegue
+          a la persona adecuada del equipo.
+        </p>
+        <ul class="mt-8 grid gap-3 sm:grid-cols-2">
+          {motivos.map((m) => (
+            <li>
+              <a
+                href={`mailto:${contacto.email}?subject=${encodeURIComponent(m.asunto)}`}
+                class="group flex h-full flex-col rounded-2xl border border-slate-line bg-white p-5 transition hover:border-blue-400 hover:bg-blue-50/40"
+              >
+                <span class="flex items-center justify-between gap-3 font-display font-semibold text-navy-800">
+                  {m.titulo}
+                  <Icono nombre="flecha" class="size-4 shrink-0 text-blue-600 transition-transform group-hover:translate-x-1" />
+                </span>
+                <span class="mt-2 text-[0.925rem] leading-relaxed">{m.texto}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </Section>
+</Base>

@@ -1,0 +1,91 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import { site, contacto, entidad } from '../config';
+---
+
+<Base
+  titulo="Política de privacidad"
+  descripcion="Cómo trata Green & Blue Alliance los datos personales. Este sitio no usa cookies, no incorpora analítica ni servicios de terceros."
+>
+  <PageHero
+    eyebrow="Protección de datos"
+    titulo="Política de privacidad"
+    intro="Resumen corto: este sitio no usa cookies, no lleva analítica y no recoge ningún dato de quien lo visita."
+  />
+
+  <Section>
+    <div class="gb-prose max-w-3xl">
+      <h2>1. Responsable del tratamiento</h2>
+      <ul>
+        <li><strong>Responsable:</strong> {entidad.denominacion}</li>
+        <li><strong>CIF:</strong> {entidad.cif ?? 'pendiente de publicar'}</li>
+        <li><strong>Domicilio:</strong> {entidad.domicilio ?? `pendiente de publicar (${site.ubicacion})`}</li>
+        <li><strong>Contacto:</strong> <a href={`mailto:${contacto.email}`}>{contacto.email}</a></li>
+      </ul>
+
+      <h2>2. Qué datos recogemos en esta web</h2>
+      <p>
+        <strong>Ninguno.</strong> Este sitio es un conjunto de páginas estáticas. No
+        incluye formularios, no requiere registro, no instala cookies propias ni de
+        terceros, no utiliza herramientas de analítica ni de publicidad, y no carga
+        recursos externos: las tipografías y las imágenes se sirven desde nuestro propio
+        dominio.
+      </p>
+      <p>
+        El servidor que aloja el sitio puede registrar de forma automática datos técnicos
+        de la conexión (dirección IP, fecha y hora, navegador) con la única finalidad de
+        garantizar el funcionamiento y la seguridad del servicio. Estos registros los
+        gestiona el proveedor de alojamiento conforme a su propia política.
+      </p>
+
+      <h2>3. Si nos escribes un correo</h2>
+      <p>
+        Cuando contactas con nosotros por correo electrónico tratamos los datos que
+        incluyas en tu mensaje —nombre, dirección de correo y el contenido que decidas
+        compartir— con las siguientes condiciones:
+      </p>
+      <ul>
+        <li><strong>Finalidad:</strong> atender y responder a tu consulta o solicitud.</li>
+        <li>
+          <strong>Base jurídica:</strong> tu consentimiento al dirigirte a nosotros y
+          nuestro interés legítimo en responder (artículo 6.1.a y 6.1.f del RGPD).
+        </li>
+        <li>
+          <strong>Conservación:</strong> mantenemos la correspondencia mientras dure la
+          relación y durante los plazos legales que resulten aplicables.
+        </li>
+        <li>
+          <strong>Destinatarios:</strong> no cedemos tus datos a terceros, salvo
+          obligación legal. El correo se gestiona a través de nuestro proveedor de
+          servicios de correo electrónico.
+        </li>
+      </ul>
+
+      <h2>4. Tus derechos</h2>
+      <p>
+        Puedes ejercer los derechos de acceso, rectificación, supresión, oposición,
+        limitación del tratamiento y portabilidad escribiendo a
+        {' '}<a href={`mailto:${contacto.email}`}>{contacto.email}</a>, indicando el
+        derecho que deseas ejercer. Si consideras que no hemos atendido correctamente tu
+        solicitud, puedes presentar una reclamación ante la Agencia Española de Protección
+        de Datos (<a href="https://www.aepd.es" target="_blank" rel="noopener noreferrer">aepd.es</a>).
+      </p>
+
+      <h2>5. Menores</h2>
+      <p>
+        Cuando realizamos actividades de educación ambiental en centros educativos, la
+        gestión de los datos y de las autorizaciones de las personas menores de edad se
+        canaliza siempre a través del propio centro y de sus familias, nunca a través de
+        este sitio web.
+      </p>
+
+      <h2>6. Cambios en esta política</h2>
+      <p>
+        Si en el futuro incorporamos formularios, boletines o herramientas de medición,
+        actualizaremos esta página antes de activarlos y lo indicaremos de forma visible.
+      </p>
+    </div>
+  </Section>
+</Base>

@@ -1,0 +1,94 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import { site, contacto, entidad } from '../config';
+
+const faltan = [
+  !entidad.cif && 'CIF / NIF de la asociación',
+  !entidad.registro && 'número de inscripción en el Registro de Asociaciones',
+  !entidad.domicilio && 'domicilio social completo',
+].filter(Boolean) as string[];
+---
+
+<Base
+  titulo="Aviso legal"
+  descripcion="Información legal y condiciones de uso del sitio web de Green & Blue Alliance."
+>
+  <PageHero eyebrow="Información legal" titulo="Aviso legal" />
+
+  <Section>
+    <div class="gb-prose max-w-3xl">
+      {faltan.length > 0 && (
+        <div class="mb-10 rounded-2xl border border-leaf-100 bg-leaf-50 p-6">
+          <p class="m-0 font-display font-semibold text-leaf-800">Pendiente de completar</p>
+          <p class="mt-2 mb-0 text-[0.95rem] text-leaf-800">
+            Para cumplir con el artículo 10 de la LSSI-CE hay que añadir a esta página:
+            {' '}{faltan.join(', ')}. Los datos se editan en
+            {' '}<code>src/config.ts</code>, y este aviso desaparece automáticamente al
+            rellenarlos.
+          </p>
+        </div>
+      )}
+
+      <h2>1. Titular del sitio web</h2>
+      <p>
+        En cumplimiento del artículo 10 de la Ley 34/2002, de Servicios de la Sociedad de
+        la Información y de Comercio Electrónico, se informa de los siguientes datos:
+      </p>
+      <ul>
+        <li><strong>Denominación:</strong> {entidad.denominacion}</li>
+        <li><strong>CIF:</strong> {entidad.cif ?? 'pendiente de publicar'}</li>
+        <li><strong>Domicilio social:</strong> {entidad.domicilio ?? `pendiente de publicar (${site.ubicacion})`}</li>
+        <li><strong>Registro:</strong> {entidad.registro ?? 'pendiente de publicar'}</li>
+        <li><strong>Correo de contacto:</strong> <a href={`mailto:${contacto.email}`}>{contacto.email}</a></li>
+      </ul>
+
+      <h2>2. Objeto</h2>
+      <p>
+        Este sitio web tiene carácter exclusivamente informativo. Su finalidad es dar a
+        conocer la identidad, la metodología, los ejes de actuación y las vías de
+        colaboración de {site.nombre}. No se comercializan productos ni servicios a
+        través de él, ni se procesan pagos, ni se registran usuarios.
+      </p>
+
+      <h2>3. Condiciones de uso</h2>
+      <p>
+        El acceso a este sitio es gratuito y no requiere registro previo. La persona
+        usuaria se compromete a hacer un uso adecuado de los contenidos y a no emplearlos
+        con fines ilícitos o lesivos para terceros.
+      </p>
+
+      <h2>4. Propiedad intelectual e industrial</h2>
+      <p>
+        Los textos, el logotipo, las fotografías y el resto de elementos de este sitio son
+        titularidad de {site.nombre} o se utilizan con la autorización de sus titulares.
+        Queda prohibida su reproducción, distribución o transformación sin autorización
+        expresa, salvo el uso privado y las citas con fines informativos con mención de la
+        fuente.
+      </p>
+
+      <h2>5. Responsabilidad</h2>
+      <p>
+        {site.nombre} no se hace responsable de los daños derivados de un uso indebido de
+        este sitio, ni del contenido de sitios de terceros a los que se pueda acceder
+        mediante enlaces. La inclusión de un enlace externo no implica que se aprueben sus
+        contenidos.
+      </p>
+
+      <h2>6. Enlaces externos</h2>
+      <p>
+        Este sitio puede enlazar a perfiles en redes sociales y a webs de entidades
+        colaboradoras. Al seguir esos enlaces se abandona nuestro sitio y pasan a
+        aplicarse las condiciones y políticas de privacidad del destino.
+      </p>
+
+      <h2>7. Legislación aplicable</h2>
+      <p>
+        Este aviso legal se rige por la legislación española. Para la resolución de
+        cualquier controversia serán competentes los juzgados y tribunales que
+        correspondan conforme a la normativa vigente.
+      </p>
+    </div>
+  </Section>
+</Base>
