@@ -13,10 +13,25 @@ export const site = {
 } as const;
 
 export const contacto = {
-  // PENDIENTE: confirmar la dirección real de correo.
   email: 'info@greenandbluealliance.org',
   // PENDIENTE: teléfono público, si se quiere mostrar.
   telefono: null as string | null,
+};
+
+/** Grupo de Teaming: microdonaciones de 1 € al mes. */
+export const teaming = 'https://www.teaming.net/greenandbluealliancesevilla';
+
+/**
+ * Contador de visitas del pie (servicio gratuito Abacus). Se muestra
+ * `inicial` + lo contado por Abacus: `inicial` son las visitas que ya
+ * registraban las metricas antes de poner el contador.
+ */
+export const visitas = {
+  inicial: 15000,
+  api: 'https://abacus.jasoncameron.dev',
+  clave: 'greenandbluealliance.org/visitas',
+  // Solo cuentan las visitas al dominio real, no las pruebas en local.
+  dominio: 'greenandbluealliance.org',
 };
 
 /** PENDIENTE: sustituir por los perfiles reales. Los que queden a null no se muestran. */

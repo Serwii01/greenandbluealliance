@@ -1,7 +1,7 @@
 ---
 import Logo from './Logo.astro';
 import Icono from './Icono.astro';
-import { site, contacto, redes, nav } from '../config';
+import { site, contacto, redes, nav, visitas } from '../config';
 import { url } from '../lib/url';
 
 const activas = redes.filter((r) => r.url);
@@ -75,6 +75,18 @@ const legales = [
 
     <div class="mt-12 flex flex-col gap-4 border-t border-white/10 pt-7 text-sm sm:flex-row sm:items-center sm:justify-between">
       <p>&copy; {anio} {site.nombre}. Todos los derechos reservados.</p>
+      <p
+        id="contador-visitas"
+        hidden
+        data-inicial={visitas.inicial}
+        data-api={visitas.api}
+        data-clave={visitas.clave}
+        data-dominio={visitas.dominio}
+        class="flex items-center gap-2"
+      >
+        <span class="size-2 rounded-full bg-leaf-500" aria-hidden="true"></span>
+        <span><strong class="font-semibold text-white" data-valor></strong> visitas</span>
+      </p>
       <ul class="flex gap-5">
         {legales.map((l) => (
           <li><a href={url(l.href)} class="transition hover:text-white">{l.titulo}</a></li>
@@ -83,3 +95,33 @@ const legales = [
     </div>
   </div>
 </footer>
+
+<script>
+  const caja = document.getElementById('contador-visitas');
+  if (caja) {
+    const { inicial, api, clave, dominio } = caja.dataset;
+    // Una visita por sesion: navegar entre paginas no vuelve a contar.
+    let contada = false;
+    try {
+      contada = sessionStorage.getItem('gb-visita') === '1';
+    } catch {}
+    const sumar = location.hostname === dominio && !contada;
+
+    fetch(`${api}/${sumar ? 'hit' : 'get'}/${clave}`)
+      .then((r) => r.json())
+      .then((datos) => {
+        // Si el contador aun no existe, Abacus responde con error: cuenta como 0.
+        const contadas = typeof datos.value === 'number' && datos.value > 0 ? datos.value : 0;
+        if (sumar) {
+          try {
+            sessionStorage.setItem('gb-visita', '1');
+          } catch {}
+        }
+        caja.querySelector('[data-valor]')!.textContent = (Number(inicial) + contadas).toLocaleString('es-ES');
+        caja.hidden = false;
+      })
+      .catch(() => {
+        // Sin servicio no se muestra nada, mejor que un numero falso.
+      });
+  }
+</script>

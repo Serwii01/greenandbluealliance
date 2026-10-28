@@ -7,12 +7,12 @@ import { site, contacto, entidad } from '../config';
 
 <Base
   titulo="Política de privacidad"
-  descripcion="Cómo trata Green & Blue Alliance los datos personales. Este sitio no usa cookies, no incorpora analítica ni servicios de terceros."
+  descripcion="Cómo trata Green & Blue Alliance los datos personales. Este sitio no usa cookies ni analítica; solo un contador de visitas anónimo."
 >
   <PageHero
     eyebrow="Protección de datos"
     titulo="Política de privacidad"
-    intro="Resumen corto: este sitio no usa cookies, no lleva analítica y no recoge ningún dato de quien lo visita."
+    intro="Resumen corto: este sitio no usa cookies, no lleva analítica y no recoge ningún dato de quien lo visita. Solo cuenta visitas, de forma anónima."
   />
 
   <Section>
@@ -29,9 +29,17 @@ import { site, contacto, entidad } from '../config';
       <p>
         <strong>Ninguno.</strong> Este sitio es un conjunto de páginas estáticas. No
         incluye formularios, no requiere registro, no instala cookies propias ni de
-        terceros, no utiliza herramientas de analítica ni de publicidad, y no carga
-        recursos externos: las tipografías y las imágenes se sirven desde nuestro propio
-        dominio.
+        terceros, no utiliza herramientas de analítica ni de publicidad, y las
+        tipografías y las imágenes se sirven desde nuestro propio dominio.
+      </p>
+      <p>
+        La única excepción es el contador de visitas del pie de página. Al abrir el sitio,
+        tu navegador hace una petición anónima al servicio externo Abacus
+        (abacus.jasoncameron.dev), que solo suma una unidad a un contador total: no
+        identifica a nadie ni guarda datos de quien visita. Para no contar la misma visita
+        varias veces, el navegador anota durante la sesión que ya se ha contado; esa marca
+        no es una cookie y se borra al cerrar la pestaña. Como cualquier servidor, Abacus
+        puede recibir datos técnicos de la conexión, como la dirección IP.
       </p>
       <p>
         El servidor que aloja el sitio puede registrar de forma automática datos técnicos

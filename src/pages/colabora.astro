@@ -6,7 +6,7 @@ import Card from '../components/Card.astro';
 import Boton from '../components/Boton.astro';
 import Icono from '../components/Icono.astro';
 import Wave from '../components/Wave.astro';
-import { contacto } from '../config';
+import { contacto, teaming } from '../config';
 
 const formas = [
   {
@@ -47,6 +47,7 @@ const canales = [
     titulo: 'Teaming / Comunidad',
     texto:
       'Microdonaciones periódicas de socios que conforman un fondo social permanente destinado a micro-subvenciones para proyectos externos.',
+    enlace: { href: teaming, texto: 'Únete a nuestro Teaming' },
   },
   {
     n: '03',
@@ -109,6 +110,23 @@ const valor = [
         </Card>
       ))}
     </div>
+
+    <div class="mt-8 flex flex-col gap-6 rounded-3xl bg-leaf-700 p-8 text-white shadow-card sm:p-10 lg:flex-row lg:items-center lg:justify-between">
+      <div class="max-w-2xl">
+        <p class="font-display text-sm font-semibold uppercase tracking-[0.16em] text-leaf-100/80">
+          Teaming
+        </p>
+        <h3 class="mt-2 text-2xl text-white">Con 1 € al mes ya formas parte</h3>
+        <p class="mt-3 leading-relaxed text-white/90">
+          Únete a nuestro grupo de Teaming. Las microdonaciones de la comunidad forman un
+          fondo estable que sostiene las intervenciones sin depender de nadie.
+        </p>
+      </div>
+      <Boton href={teaming} variante="claro" class="shrink-0 self-start lg:self-auto">
+        Unirme al Teaming
+        <Icono nombre="flecha" class="size-4" />
+      </Boton>
+    </div>
   </Section>
 
   {/* ---------- Propuesta de valor ---------- */}
@@ -144,6 +162,19 @@ const valor = [
           <span class="gb-gradient-text font-display text-3xl font-bold">{c.n}</span>
           <h3 class="mt-3 text-xl">{c.titulo}</h3>
           <p class="mt-2.5 leading-relaxed">{c.texto}</p>
+          {c.enlace && (
+            <p class="mt-4">
+              <a
+                href={c.enlace.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 font-display text-sm font-semibold text-blue-600 transition hover:text-navy-800"
+              >
+                {c.enlace.texto}
+                <Icono nombre="flecha" class="size-4" />
+              </a>
+            </p>
+          )}
         </div>
       ))}
     </div>

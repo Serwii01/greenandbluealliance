@@ -110,7 +110,6 @@ genera en el build desde [`src/pages/robots.txt.ts`](src/pages/robots.txt.ts).
 
 Estos datos aparecen como marcadores en el sitio hasta que se rellenen en `src/config.ts`:
 
-- Dirección de correo real (ahora `info@greenandbluealliance.org`).
 - Perfiles de redes sociales (están a `null` y no se muestran).
 - CIF, número de registro y domicilio social de la asociación: son **obligatorios** en el
   aviso legal. Mientras falten, la página muestra un recuadro recordándolo.
